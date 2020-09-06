@@ -31,6 +31,18 @@ router
       status: "success",
       data: data[data.length - 1],
     };
+  })
+  .get("/:id", (ctx) => {
+    const { id } = ctx.params;
+
+    const d = data.find((d) => d.id === id);
+
+    if (!d) ctx.throw(404, "data not found.");
+
+    ctx.body = {
+      status: "success",
+      data: d,
+    };
   });
 
 app.use(async (ctx, next) => {
