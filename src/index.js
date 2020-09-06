@@ -1,5 +1,8 @@
 const Koa = require("koa");
+var Router = require("koa-router");
+
 const app = new Koa();
+const router = new Router();
 
 app.use(async (ctx, next) => {
   ctx.accepts("application/json");
@@ -15,6 +18,8 @@ app.use(async (ctx, next) => {
 
   console.log(`${ctx.response.status} ${ctx.method} ${ctx.url} - ${delta}ms`);
 });
+
+app.use(router.routes()).use(router.allowedMethods());
 
 app.on("error", (err, ctx) => {
   console.error(err);
