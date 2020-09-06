@@ -59,6 +59,19 @@ router
       status: "success",
       data: d,
     };
+  })
+  .delete("/:id", (ctx) => {
+    const { id } = ctx.params;
+
+    const d = data.find((d) => d.id === id);
+
+    if (!d) ctx.throw(404, "data not found.");
+
+    data = data.filter((d) => d.id !== id);
+
+    ctx.body = {
+      status: "success",
+    };
   });
 
 app.use(async (ctx, next) => {
