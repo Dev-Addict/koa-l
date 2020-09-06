@@ -1,8 +1,17 @@
 const Koa = require("koa");
 var Router = require("koa-router");
 
+const data = [];
+
 const app = new Koa();
 const router = new Router();
+
+router.get('/', ctx => {
+  ctx.body = {
+    status: 'success',
+    data
+  };
+})
 
 app.use(async (ctx, next) => {
   ctx.accepts("application/json");
