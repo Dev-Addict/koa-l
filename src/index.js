@@ -43,6 +43,22 @@ router
       status: "success",
       data: d,
     };
+  })
+  .patch("/:id", (ctx) => {
+    const { id } = ctx.params;
+
+    const d = data.find((d) => d.id === id);
+
+    if (!d) ctx.throw(404, "data not found.");
+
+    const body = ctx.request.body;
+
+    d = { ...d, ...body };
+
+    ctx.body = {
+      status: "success",
+      data: d,
+    };
   });
 
 app.use(async (ctx, next) => {
