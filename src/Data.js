@@ -5,3 +5,5 @@ class Data {
     this.description = description;
   }
 }
+
+module.exports = Data;

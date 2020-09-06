@@ -1,17 +1,37 @@
 const Koa = require("koa");
-var Router = require("koa-router");
+const bodyParser = require("koa-bodyparser");
+const Router = require("koa-router");
+
+const Data = require("./Data");
 
 const data = [];
 
 const app = new Koa();
 const router = new Router();
 
-router.get('/', ctx => {
-  ctx.body = {
-    status: 'success',
-    data
-  };
-})
+app.use(bodyParser());
+
+router
+  .get("/", (ctx) => {
+    ctx.body = {
+      status: "success",
+      data,
+    };
+  })
+  .post("/", (ctx) => {
+    const { title, description } = ctx.request.body;
+
+    if (!title) ctx.throw(400, "title is required.");
+
+    if (!description) ctx.throw(400, "description is required.");
+
+    data.push(new Data(title, description));
+
+    ctx.body = {
+      status: "success",
+      data: data[data.length - 1],
+    };
+  });
 
 app.use(async (ctx, next) => {
   ctx.accepts("application/json");
